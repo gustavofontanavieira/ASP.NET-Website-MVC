@@ -14,12 +14,7 @@ namespace MyMVCSite.Controllers
 
         public IActionResult Index()
         {
-            HomeModel home = new HomeModel();
-
-            home.Nome = "Gustavo";
-            home.Email = "gustavoacvvvieira@outlook.com";
-
-            return View(home);//vai conseguir interagir com os dados setados acima
+            return View();
         }
 
         public IActionResult Privacy()
