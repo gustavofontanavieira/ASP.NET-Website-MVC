@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using MyMVCSite.Repositorio;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,6 +28,8 @@ namespace MyMVCSite
         {
             services.AddControllersWithViews();
             services.AddEntityFrameworkSqlServer().AddDbContext<Data.BancoContext>(o => o.UseSqlServer(this.Configuration.GetConnectionString("DataBase")));
+            //injeção de dependência
+            services.AddScoped<IContatoRepositorio, ContatoRepositorio>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
