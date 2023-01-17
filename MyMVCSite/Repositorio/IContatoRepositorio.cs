@@ -12,5 +12,9 @@ namespace MyMVCSite.Repositorio
         ContatoModel Adicionar(ContatoModel contato);
 
         ContatoModel BuscarContatoId(int id);
+
+        ContatoModel Atualizar(ContatoModel contato);
+
+        Boolean ExcluirContatoId(int id);
     }
 }

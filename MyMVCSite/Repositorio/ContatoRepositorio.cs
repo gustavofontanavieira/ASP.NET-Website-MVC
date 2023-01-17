@@ -34,5 +34,29 @@ namespace MyMVCSite.Repositorio
             return _context.Contatos.FirstOrDefault(x => x.Id == id);
         }
 
+        public ContatoModel Atualizar(ContatoModel contato)
+        {
+            ContatoModel contatoDB = this.BuscarContatoId(contato.Id);
+            if (contatoDB == null) throw new Exception("Houve um erro na atualização do contato");
+
+            contatoDB.Email = contato.Email;
+            contatoDB.Nome = contato.Nome;
+            contatoDB.Numero = contato.Numero;
+
+            _context.Contatos.Update(contatoDB);
+            _context.SaveChanges();
+
+            return contatoDB;
+        }
+
+        public Boolean ExcluirContatoId(int id)
+        {
+            ContatoModel contatoAchado = this.BuscarContatoId(id);
+            if (contatoAchado == null) throw new Exception("Houve um erro ao deletar contato");
+            _context.Contatos.Remove(contatoAchado);
+            _context.SaveChanges();
+            return true;
+        }
+
     }
 }
