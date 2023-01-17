@@ -10,5 +10,7 @@ namespace MyMVCSite.Repositorio
     {
         List<ContatoModel> BuscarTodos();
         ContatoModel Adicionar(ContatoModel contato);
+
+        ContatoModel BuscarContatoId(int id);
     }
 }

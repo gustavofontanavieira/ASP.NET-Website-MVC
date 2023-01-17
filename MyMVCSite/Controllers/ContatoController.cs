@@ -18,7 +18,6 @@ namespace MyMVCSite.Controllers
         public IActionResult Index()
         {
             var contatos = _contatoRepositorio.BuscarTodos();
-            System.Console.WriteLine(contatos);
             return View(contatos);
         }
 
@@ -27,9 +26,10 @@ namespace MyMVCSite.Controllers
             return View();
         }
 
-        public IActionResult Editar()
+        public IActionResult Editar(int id)
         {
-            return View();
+            ContatoModel contato = _contatoRepositorio.BuscarContatoId(id);
+            return View(contato);
         }
 
         public IActionResult ApagarConfirmacao()

@@ -9,24 +9,29 @@ namespace MyMVCSite.Repositorio
 {
     public class ContatoRepositorio : IContatoRepositorio
     {
-        private readonly BancoContext _bancoContext;
+        private readonly BancoContext _context;
         public ContatoRepositorio(BancoContext bancoContext)
         {
-            _bancoContext = bancoContext;
+           this._context = bancoContext;
         }
 
         public ContatoModel Adicionar(ContatoModel contato)
         {
             //Inserção do banco
-             _bancoContext.Contatos.Add(contato);
-            _bancoContext.SaveChanges();
+            _context.Contatos.Add(contato);
+            _context.SaveChanges();
 
             return contato;
         }
 
         public List<ContatoModel> BuscarTodos() 
         {
-            return _bancoContext.Contatos.ToList();
+            return _context.Contatos.ToList();
+        }
+
+        public ContatoModel BuscarContatoId(int id)
+        {
+            return _context.Contatos.FirstOrDefault(x => x.Id == id);
         }
 
     }
