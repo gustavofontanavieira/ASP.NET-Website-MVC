@@ -40,22 +40,60 @@ namespace MyMVCSite.Controllers
 
         public IActionResult Apagar(int id)
         {
-            _contatoRepositorio.ExcluirContatoId(id);
-            return RedirectToAction("Index");
+            try {
+                bool apagado =_contatoRepositorio.ExcluirContatoId(id);
+                if (apagado){
+                    TempData["MensagemSucesso"] = "Contato apagado com sucesso";
+                } else
+                {
+                    TempData["MensagemErro"] = "Não foi possível apagar o contato";
+                }
+                return RedirectToAction("Index");
+            } catch (System.Exception erro){
+                TempData["MensagemErro"] = "Não foi possível apagar o contato";
+                return RedirectToAction("Index");
+            }
+
+            
         }
 
         [HttpPost]
         public IActionResult Criar(ContatoModel contato)
         {
-            _contatoRepositorio.Adicionar(contato);
-            return RedirectToAction("Index");
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    _contatoRepositorio.Adicionar(contato);
+                    TempData["MensagemSucesso"] = "Contato cadastrado com sucesso";
+                    return RedirectToAction("Index");
+                }
+
+                return View(contato);
+            } catch(System.Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos cadastrar seu contato, tente novamente, detalhe do erro: {erro.Message}";
+                return RedirectToAction("Index");
+            }
         }
 
         [HttpPost]
         public IActionResult Alterar(ContatoModel contato)
         {
-            _contatoRepositorio.Atualizar(contato);
-            return RedirectToAction("Index");
+            try {
+                if (ModelState.IsValid)
+                {
+                    _contatoRepositorio.Atualizar(contato);
+                    TempData["MensagemSucesso"] = "Contato alterado com sucesso";
+                    return RedirectToAction("Index");
+                }
+                return View("Editar", contato);
+            }
+            catch(System.Exception erro)
+            {
+                TempData["MensagemErro"] = $"Ops, não conseguimos alterar seu contato, tente novamente, detalhe do erro: {erro.Message}";
+                return RedirectToAction("Index");
+            }
         }
 
     }
